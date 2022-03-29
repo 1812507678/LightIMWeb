@@ -1,0 +1,78 @@
+
+@function rem($px){
+  @return $px/108+rem;
+}
+
+
+body {
+  line-height: 1; background: #f5f5f5;
+  font-family:'PingFang SC', 'Heiti SC', 'Droidsansfallback', Helvetica, 'Droid Sans';
+}
+body,ul,ol,dl,dd,h1,h2,h3,h4,h5,h6,pre,form,fieldset,legend,input,button,textarea,p,blockquote,table,th,td,menu{margin:0;padding:0;resize: none;}
+table{border-collapse:collapse;border-spacing:0;}
+ul,ol,menu{list-style:none}
+fieldset,img{border:none}
+img,object,select,input,textarea,button{vertical-align:middle;box-sizing:content-box;}
+input,textarea,select,address,caption,cite,code,dfn,em,i,b,strong,small,th,var,abbr,button,u,s{
+	font-style:normal;text-decoration: none;
+}
+article,aside,footer,header,hgroup,nav,section,figure,figcaption {display: block;}
+code, kbd, pre, samp, tt { font-family: Consolas,"Courier New", Courier, monospace;}
+address, cite, dfn, em, var,i {font-style: normal;}
+blockquote, q {quotes: none;}
+blockquote:before, blockquote:after,q:before, q:after {content:"";content: none;}
+a {
+  text-decoration: none; cursor: pointer;
+  display: block;
+  // color: $BaseC;
+  // &:link,&:visited, &:active{}
+  &:hover, &:focus { outline: none; }
+}
+* {
+	-webkit-tap-highlight-color: transparent;
+}
+img {
+  display: block; max-width: 100%;
+}
+
+.cf{
+	zoom:1;
+	&:before,&:after {content:"";display:table;}
+	&:after {clear:both;}
+}
+
+input,textarea {
+  -webkit-user-select: auto; outline: none;
+}
+
+button{
+    border:0;
+    outline:none;
+    background-color: transparent;
+  }
+
+::-webkit-scrollbar {
+  display: none;
+}
+
+.outer {
+  width: rem(1080);
+  height: rem(1920);
+  margin: 0 auto;min-height: 100vh;
+  // background: $cf8;
+  /*overflow-x: hidden;*/
+  /*overflow-y: auto;*/
+  -webkit-overflow-scrolling:touch;
+  @extend .cf;
+}
+.ios {
+  -webkit-overflow-scrolling : touch;
+  &::-webkit-scrollbar {width: 0;}
+}
+.fix_iphonex {
+  @media only screen and (device-width: 375px) and (device-height: 812px) and (-webkit-device-pixel-ratio: 3) {
+    padding-bottom: rem(34);
+  }
+}
+
+

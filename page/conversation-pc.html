@@ -1,0 +1,126 @@
+<html lang="zh-CN" xmlns:v-bind="http://www.w3.org/1999/xhtml">
+<head>
+    <title>客服系统</title>
+    <meta charset="UTF-8"/>
+    <meta name="flexible" content="initial-dpr=2"/>
+    <meta content="yes" name="apple-mobile-web-app-capable">
+    <meta content="yes" name="apple-touch-fullscreen">
+    <meta content="telephone=no,email=no" name="format-detection">
+
+    <!--H5页面不缓存-->
+    <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate" />
+    <meta http-equiv="Pragma" content="no-cache" />
+    <meta http-equiv="Expires" content="0" />
+
+    <link href="../css/conversation-pc.css" rel="stylesheet"/>
+
+    <script src="../js/lib/jquery-3.2.1.min.js"></script>
+    <script src="../js/flexible.debug.js"></script>
+    <script src="../js/flexible_css.debug.js"></script>
+
+    <link rel="stylesheet" type="text/css" href="../css/lib/image-pre.css">
+    <link rel="stylesheet" type="text/css" href="../css/lib/mui.min.css">
+
+    <script type="text/javascript" src="../js/common/bridge.js"></script>
+    <script type="text/javascript" src="../js/lib/bootstrap.min.js"></script>
+    <script type="text/javascript" src="../js/lib/md5.js"></script>
+    <script type="text/javascript" src="../js/lib/aes-encrypt.js"></script>
+    <script type="text/javascript" src="../js/lib/crypto-js.js"></script>
+    <script type="text/javascript" src="../js/lib/layer/layer.js"></script>
+    <script type="text/javascript" src="../js/lib/fingerprint.js"></script>
+    <script type="text/javascript" src="../js/util/tool.js"></script>
+    <script type="text/javascript" src="../js/util/constant.js"></script>
+    <script type="text/javascript" src="../js/common/envconfig.js"></script>
+    <script type="text/javascript" src="../js/common/comconfig.js"></script>
+    <script type="text/javascript" src="../js/util/userUtil.js"></script>
+    <script type="text/javascript" src="../js/lib/vue.js"></script>
+    <script type="text/javascript" src="../js/util/httpUtil.js"></script>
+    <script type="text/javascript" src="../js/util/toastUtil.js"></script>
+    <script type="text/javascript" src="../js/util/formatUtil.js"></script>
+    <script type="text/javascript" src="../js/conversation-pc.js"></script>
+    <script type="text/javascript" src="../js/util/deviceUtil.js"></script>
+    <script type="text/javascript" src="../js/util/initSdkUtil.js"></script>
+    <script type="text/javascript" src="../js/index.js"></script>
+
+   <!-- <script type="text/javascript" src="../js/lib/mui.min.js"></script>
+    <script type="text/javascript" src="../js/lib/mui.zoom.js"></script>
+    <script type="text/javascript" src="../js/lib/mui.previewimage.js"></script>-->
+
+</head>
+<body>
+<div class="outer" id="app_content">
+    <div class="left" id="conversation">
+        <div class="item-conversation" v-bind:class="{ conversationSelected: conversationSelectIndex==index }"
+             v-for="(item,index) in conversationList" @click="onConversationItemClick(index)">
+            <img :src="HttpUtil.getWholeImageUrl(item.iconUrl)">
+            <div class="unread-count" v-if="item.unreadCount>0">{{item.unreadCount}}</div>
+            <div class="info">
+                <p class="nick-name">{{item.nickname}}
+                    <span v-if="item.otherOutUserId">({{item.otherOutUserId}})</span>
+                    <span v-if="!item.otherOutUserId && item.otherUserId">(旧版{{item.otherUserId}})</span>
+                </p>
+                <p class="last-msg">{{item.lastText}}</p>
+            </div>
+            <div class="time">{{FormatUtil.getMsgDateByTime(item.timestamp)}}</div>
+        </div>
+
+
+        <div class="bottom-desc">
+            <div class="data-loading" v-if="conversationIsRefreshing">加载中...</div>
+            <div class="data-loading" v-if="conversationIsDataLoadAll">-------已经到底啦-------</div>
+            <div class="data-loading" v-if="conversationIsNotData">-------没有数据-------</div>
+        </div>
+
+        <br>
+        <br>
+        <br>
+    </div>
+
+   <!-- <div class="ver-line"></div>-->
+
+    <div class="right" id="itemMsg" v-show="conversationSelectIndex>=0">
+        <div class="top-name">
+            <div class="username">{{otherNickname}}({{otherUserId}})</div>
+        </div>
+
+        <div class="msg-top-desc">
+            <div class="data-loading" v-if="msgIsRefreshing">加载中...</div>
+            <div class="data-loading" v-if="msgIsDataLoadAll">------没有更多数据了-------</div>
+            <div class="data-loading" v-if="msgIsNotData">-------没有数据-------</div>
+        </div>
+
+        <div class="item-body" >
+            <div class="item-msg" v-for="(item,index) in messageList" >
+                <div class="msg-time" v-if="item.isShowTime">{{FormatUtil.getMsgDateByTime(item.timestamp)}}</div>
+                <div v-if="imUserId===item.toUserId">
+                    <img class="head-img img-left" :src="HttpUtil.getWholeImageUrl(item.iconUrl)" >
+                    <div class="text text-left" v-if="item.type==1">{{item.text}}</div>
+                    <img class="msg-img-left" :src="HttpUtil.getWholeImageUrl(item.fileSmallUrl)" v-if="item.type==2"
+                         data-preview-src="" data-preview-group="1">
+                    <div class="clear"></div> <!-- 空白盒子 -->
+                </div>
+
+                <div v-if="imUserId===item.fromUserId">
+                    <img class="head-img img-right" :src="HttpUtil.getWholeImageUrl(item.iconUrl)" >
+                    <div class="text text-right" v-if="item.type==1">{{item.text}}</div>
+                    <img class="msg-img-right" :src="HttpUtil.getWholeImageUrl(item.fileSmallUrl)" v-if="item.type==2"
+                         data-preview-src="" data-preview-group="1">
+                    <div class="clear"></div> <!-- 空白盒子 -->
+                </div>
+            </div>
+        </div>
+
+        <div class="buttom-send">
+            <div class="bottom-handle">
+                <input id="uploadImg" type="file" accept="image/gif, image/jpg, image/png" />
+                <img src="../images/icon_upload.png" />
+            </div>
+            <textarea placeholder="" v-model="inputText" @keyup.enter="sendTextMsg()"/>
+           <!-- <button @click="sendMsg()">发送</button>-->
+        </div>
+    </div>
+
+
+</div>
+</body>
+</html>

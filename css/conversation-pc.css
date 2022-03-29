@@ -1,0 +1,272 @@
+
+body{
+    background: #ededed;
+    width: 100%;
+    height: 100%;
+}
+.outer{
+    height: 100%;
+    overflow: hidden;
+}
+.left{
+    width: 25%;
+    /*height: 100%;*/
+    float: left;
+   /* height: 667px;*/
+    border-right: 0.5px solid #AAA;
+    /*overflow-y:scroll;*/
+    overflow: auto;
+}
+.item-conversation{
+    width: 100%;
+    height: 0.7rem;
+    background: white;
+    border-bottom: 0.5px solid #AAA;
+}
+
+.item-conversation img{
+    float: left;
+    width: 0.5rem;
+    height: 0.5rem;
+    margin-left: 10px;
+    position: relative;
+    top: 50%;
+    transform: translateY(-50%);
+    border: 1px solid lightgray;
+    border-radius: 20%;
+
+}
+
+.item-conversation .unread-count{
+    background: red;
+    border-radius: 100%;
+    height: 0.2rem;
+    width: 0.2rem;
+    z-index: 8;
+    position: absolute;
+    text-align: center;
+    color: white;
+    margin-left: 0.1rem;
+    margin-top: 0.06rem;
+    padding-top: -5px;
+    font-size: 0.1rem;
+}
+
+.item-conversation .info{
+    float: left;
+    margin-left: 10px;
+    width: 55%;
+    position: relative;
+    top: 50%;
+    transform: translateY(-50%);
+    /*background: #1E9FFF;*/
+}
+
+.item-conversation .nick-name{
+    font-size: 0.15rem;
+    color: black;
+    height: 25px;
+    line-height: 25px;
+    display: block;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    -ms-text-overflow: ellipsis;
+    white-space:nowrap;
+
+}
+.item-conversation .last-msg{
+    margin-top: 0.05rem;
+    font-size: 0.08rem;
+    color: #8c8c8c;
+}
+
+.item-conversation .time{
+    margin-top: 0.2rem;
+    margin-right: 5px;
+    float: right;
+    font-size: 0.08rem;
+    color: #8c8c8c;
+}
+.conversationSelected{
+    background: #dedede;
+}
+
+.bottom-desc{
+    width: 100%;
+    height: 200px;
+    text-align: center;
+    margin-top: 0.1rem;
+    color: #1E9FFF;
+    float: left;
+}
+.msg-top-desc{
+    width: 100%;
+    text-align: center;
+    margin-top: 0.6rem;
+    color: #1E9FFF;
+    float: left;
+}
+.data-loading{
+    color: #999999;
+    font-size: 0.1rem;
+    position: relative;
+}
+
+.ver-line{
+    float: left;
+    height: 667px;
+    width: 1px;
+    background: #8c8c8c;
+}
+
+/*右边聊天框*/
+.right{
+    width: 74.8%;
+    float: left;
+    height: 980px;
+    /*overflow-y:scroll;*/
+    overflow: auto;
+}
+.item-body{
+    margin-bottom: 3.8rem;
+}
+.item-msg{
+    width: 100%;
+    min-height: 0.6rem;
+    margin-top: 10px;
+}
+
+.img-left{
+    float: left;
+    margin-left: 10px;
+}
+
+.img-right{
+    float: right;
+    margin-right: 10px;
+}
+
+.head-img{
+    width: 0.4rem;
+    height: 0.4rem;
+    border: 1px solid lightgray;
+    border-radius: 5px;
+}
+
+.item-msg .text{
+    font-size: 0.2rem;
+    color: black;
+    padding: 0.1rem;
+    max-width: 6rem;
+    border-radius: 5px;
+    line-height: 150%;
+}
+
+.msg-img-left{
+    float: left;
+    margin-left: 10px;
+    border: 1px solid lightgray;
+    border-radius: 5px;
+    max-width: 3rem;
+    min-width: 1rem;
+}
+.msg-img-right{
+    float: right;
+    margin-right: 10px;
+    border: 1px solid lightgray;
+    border-radius: 5px;
+    max-width: 3rem;
+    min-width: 1rem;
+}
+
+
+.text-left{
+    float: left;
+    margin-left: 0.3rem;
+    background: white;
+}
+
+.text-right{
+    float: right;
+    margin-right: 0.3rem;
+    background: #98ea70;
+}
+.clear{clear:both;} /* 清除空白盒子的所有浮动 */
+
+.top-name{
+    width: 75%;
+    text-align: center;
+    top: 0;
+    height: 0.4rem;
+    background: white;
+    position: fixed;
+    border-bottom: 0.5px solid #AAA;
+}
+.username{
+    position: relative;
+    top: 50%;
+    transform:translateY(-50%);
+}
+.buttom-send{
+    width: 75%;
+    text-align: center;
+    bottom: 0;
+    height: 0.8rem;
+    position: fixed;
+    background: white;
+}
+
+.buttom-send textarea{
+    width:90%;
+    height: 0.8rem;
+    float: left;
+   /* position: relative;
+    top: 50%;
+    transform:translateY(-50%);*/
+
+    font-size: 0.15rem;
+   /* border-radius: 10px;*/
+   /* border: 1px solid lightgray;*/
+    resize: none;
+    border: none;
+    padding-left: 5px;
+    padding-right: 5px;
+    margin-top: 5px;
+}
+.bottom-handle{
+    float: right;
+    margin-right: 10px;
+    margin-top: 5px;
+}
+.bottom-handle input{
+    position: absolute;
+    opacity: 0;
+    right: 10px;
+    width: 30px;
+    height: 30px;
+}
+.bottom-handle img{
+    width: 30px;
+    height: 30px;
+    vertical-align: middle;
+}
+
+.buttom-send button{
+    float: right;
+    width: 12%;
+    height: 0.5rem;
+    background: #1fc062;
+    margin-right: 0.1rem;
+    color: white;
+    font-size: 0.2rem;
+    position: relative;
+    top: 50%;
+    transform:translateY(-50%);
+    border-radius: 10px;
+}
+.msg-time{
+    width: 100%;
+    text-align: center;
+    color: #999999;
+    font-size: 0.1rem;
+}

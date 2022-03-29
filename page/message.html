@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <title>聊天</title>
+    <meta charset="UTF-8"/>
+    <meta name="flexible" content="initial-dpr=2"/>
+    <meta content="yes" name="apple-mobile-web-app-capable">
+    <meta content="yes" name="apple-touch-fullscreen">
+    <meta content="telephone=no,email=no" name="format-detection">
+
+    <!--H5页面不缓存-->
+    <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate" />
+    <meta http-equiv="Pragma" content="no-cache" />
+    <meta http-equiv="Expires" content="0" />
+
+    <link href="../css/base.css" rel="stylesheet"/>
+    <link href="../css/message.css" rel="stylesheet"/>
+    <link href="../css/common.css" rel="stylesheet"/>
+
+    <script src="../js/lib/jquery-3.2.1.min.js"></script>
+
+    <script src="../js/flexible.debug.js"></script>
+    <script src="../js/flexible_css.debug.js"></script>
+    <link rel="stylesheet" type="text/css" href="../css/lib/image-pre.css">
+    <link rel="stylesheet" type="text/css" href="../css/lib/mui.min.css">
+
+    <script type="text/javascript" src="../js/common/bridge.js"></script>
+    <script type="text/javascript" src="../js/lib/bootstrap.min.js"></script>
+    <script type="text/javascript" src="../js/lib/md5.js"></script>
+    <script type="text/javascript" src="../js/lib/aes-encrypt.js"></script>
+    <script type="text/javascript" src="../js/lib/crypto-js.js"></script>
+    <script type="text/javascript" src="../js/lib/layer/layer.js"></script>
+    <script type="text/javascript" src="../js/lib/fingerprint.js"></script>
+    <script type="text/javascript" src="../js/util/tool.js"></script>
+    <script type="text/javascript" src="../js/util/constant.js"></script>
+    <script type="text/javascript" src="../js/common/envconfig.js"></script>
+    <script type="text/javascript" src="../js/common/comconfig.js"></script>
+    <script type="text/javascript" src="../js/util/userUtil.js"></script>
+    <script type="text/javascript" src="../js/lib/vue.js"></script>
+    <script type="text/javascript" src="../js/util/httpUtil.js"></script>
+    <script type="text/javascript" src="../js/util/toastUtil.js"></script>
+    <script type="text/javascript" src="../js/util/formatUtil.js"></script>
+    <script type="text/javascript" src="../js/util/deviceUtil.js"></script>
+    <script type="text/javascript" src="../js/util/initSdkUtil.js"></script>
+    <script type="text/javascript" src="../js/message.js"></script>
+    <script type="text/javascript" src="../js/index.js"></script>
+
+    <script type="text/javascript" src="../js/lib/mui.min.js"></script>
+    <script type="text/javascript" src="../js/lib/mui.zoom.js"></script>
+    <script type="text/javascript" src="../js/lib/mui.previewimage.js"></script>
+
+</head>
+
+<body>
+<div class="outer" id="app_content">
+    <div class="bottom-desc">
+        <div class="data-loading" v-if="isRefreshing">加载中...</div>
+        <div class="data-loading" v-if="isDataLoadAll">------没有更多数据了-------</div>
+    </div>
+
+    <div class="item-body">
+        <div class="item" v-for="(item,index) in messageList" >
+            <div class="msg-time" v-if="item.isShowTime">{{FormatUtil.getMsgDateByTime(item.timestamp)}}</div>
+            <div v-if="imUserId===item.toUserId">
+                <img class="head-img img-left" :src="HttpUtil.getWholeImageUrl(item.iconUrl)">
+                <div class="text text-left" v-if="item.type==1">{{item.text}}</div>
+                <img class="msg-img-left" :src="HttpUtil.getWholeImageUrl(item.fileSmallUrl)" v-if="item.type==2"
+                     data-preview-src="" data-preview-group="1">
+                <div class="clear"></div> <!-- 空白盒子 -->
+            </div>
+
+            <div v-if="imUserId===item.fromUserId">
+                <img class="head-img img-right" :src="HttpUtil.getWholeImageUrl(item.iconUrl)" >
+                <div class="text text-right" v-if="item.type==1">{{item.text}}</div>
+                <img class="msg-img-right" :src="HttpUtil.getWholeImageUrl(item.fileSmallUrl)" v-if="item.type==2"
+                     data-preview-src="" data-preview-group="1">
+                <div class="clear"></div> <!-- 空白盒子 -->
+            </div>
+        </div>
+    </div>
+
+    <div class="buttom-send">
+        <input placeholder="" v-model="inputText">
+        <button @click="sendTextMsg()" v-if="inputText.length>0">发送</button>
+        <div class="bottom-handle" v-if="inputText.length==0">
+            <input id="uploadImg" type="file" accept="image/gif, image/jpg, image/png" @click="uploadImgClick()"/>
+            <img src="../images/icon_upload_add.png" />
+        </div>
+
+    </div>
+
+</div>
+</body>
+</html>

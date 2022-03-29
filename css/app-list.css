@@ -1,0 +1,80 @@
+
+.create{
+    float: left;
+    font-size: 0.1rem;
+    margin-left: 3%;
+    margin-top: 20px;
+    background: #adadad;
+    padding: 5px;
+    border-radius: 5px;
+    color: white;
+    border:none;
+}
+.account{
+    float: right;
+    font-size: 0.1rem;
+    margin-right: 3%;
+    margin-top: 20px;
+    text-align: right;
+}
+.exit{
+    color: red;
+}
+.item{
+    height: 150px;
+    width: 94%;
+    text-align: center;
+    margin-top: 20px;
+    float: left;
+    margin-left: 3%;
+    border: 1px solid lightgray;
+}
+.sub_item{
+    width: 16%;
+    background-color: #ffffff;
+    float: left;
+    position: relative;
+    top: 50%;
+    transform:translateY(-50%);
+}
+.app_title{
+    font-size: 0.2rem;
+    float: left;
+    width: 16%;
+    position: relative;
+    top: 50%;
+    transform:translateY(-50%);
+    color: gray;
+    font-weight: bold;
+}
+.sub_title{
+    font-size: 0.2rem;
+    color: gray;
+    font-weight: bold;
+}
+.sub_title_desc{
+    font-size: 0.1rem;
+    color: #adadad;
+    width: 100%;
+    margin-top: 20px;
+}
+.sub_key_desc{
+    font-size: 0.1rem;
+    color: #adadad;
+    width: 100%;
+    margin-top: 2px;
+}
+
+.sub_item button{
+    padding: 5px;
+    background: #adadad;
+    color: white;
+    border-radius: 5px;
+    border:none;
+    font-size: 0.15rem;
+}
+.copy{
+    width: 15px;
+    height: 15px;
+    margin-left: 3px
+}

@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>应用列表-LightIM客服系统</title>
+
+    <meta charset="UTF-8"/>
+    <meta name="flexible" content="initial-dpr=2"/>
+    <meta content="yes" name="apple-mobile-web-app-capable">
+    <meta content="yes" name="apple-touch-fullscreen">
+    <meta content="telephone=no,email=no" name="format-detection">
+
+    <!--H5页面不缓存-->
+    <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate" />
+    <meta http-equiv="Pragma" content="no-cache" />
+    <meta http-equiv="Expires" content="0" />
+
+    <link href="../css/app-list.css" rel="stylesheet"/>
+    <link href="../css/lib/bootstrap.min.css" rel="stylesheet"/>
+
+
+    <script src="../js/lib/jquery-3.2.1.min.js"></script>
+
+    <script src="../js/flexible.debug.js"></script>
+    <script src="../js/flexible_css.debug.js"></script>
+
+    <script type="text/javascript" src="../js/common/bridge.js"></script>
+    <script type="text/javascript" src="../js/lib/bootstrap.min.js"></script>
+    <script type="text/javascript" src="../js/lib/md5.js"></script>
+    <script type="text/javascript" src="../js/lib/aes-encrypt.js"></script>
+    <script type="text/javascript" src="../js/lib/crypto-js.js"></script>
+    <script type="text/javascript" src="../js/lib/layer/layer.js"></script>
+    <script type="text/javascript" src="../js/util/tool.js"></script>
+    <script type="text/javascript" src="../js/util/constant.js"></script>
+    <script type="text/javascript" src="../js/common/envconfig.js"></script>
+    <script type="text/javascript" src="../js/common/comconfig.js"></script>
+    <script type="text/javascript" src="../js/util/userUtil.js"></script>
+    <script type="text/javascript" src="../js/lib/vue.js"></script>
+    <script type="text/javascript" src="../js/util/httpUtil.js"></script>
+    <script type="text/javascript" src="../js/util/toastUtil.js"></script>
+    <script type="text/javascript" src="../js/util/formatUtil.js"></script>
+    <script type="text/javascript" src="../js/util/deviceUtil.js"></script>
+    <script type="text/javascript" src="../js/app-list.js"></script>
+    <script type="text/javascript" src="../js/index.js"></script>
+
+    <!-- 引入样式 -->
+    <link rel="stylesheet" href="https://unpkg.com/element-ui/lib/theme-chalk/index.css">
+    <!-- 引入组件库 -->
+    <script src="https://unpkg.com/element-ui/lib/index.js"></script>
+
+</head>
+<body>
+
+<div class="outer" id="app_content">
+    <button class="create" @click="createAppClick">新建应用</button>
+    <div class="account">
+        <div>用户名:{{user.name}}</div>
+        <div>appId:{{user.appId}}</div>
+        <a class="exit" @click="exitClick">退出</a>
+    </div>
+
+    <div class="item" v-for="(item,index) in appList">
+        <!--<span class="app_title">app名称</span>-->
+        <div class="sub_item">
+            <p class="sub_title">{{item.name}}</p>
+            <p class="sub_key_desc">appKey:{{item.appKey}}</p>
+            <p class="sub_key_desc">appSecret:<img src="../images/icon_cpoy.png" class="copy"></p>
+        </div>
+
+        <div class="sub_item">
+            <p class="sub_title">--</p>
+            <p class="sub_title_desc">总注册用户</p>
+        </div>
+
+        <div class="sub_item">
+            <p class="sub_title">--</p>
+            <p class="sub_title_desc">当月注册用户</p>
+        </div>
+
+        <div class="sub_item">
+            <p class="sub_title">--</p>
+            <p class="sub_title_desc">当月消息</p>
+        </div>
+
+        <div class="sub_item">
+            <p class="sub_title">--</p>
+            <p class="sub_title_desc">今日消息</p>
+        </div>
+
+        <div class="sub_item">
+            <button @click="openChatClick(index)">打开聊天</button>
+        </div>
+
+    </div>
+
+
+</div>
+
+</body>
+</html>
