@@ -42,28 +42,26 @@
     <script type="text/javascript" src="../js/util/initSdkUtil.js"></script>
     <script type="text/javascript" src="../js/index.js"></script>
 
-   <!-- <script type="text/javascript" src="../js/lib/mui.min.js"></script>
+    <script type="text/javascript" src="../js/lib/mui.min.js"></script>
     <script type="text/javascript" src="../js/lib/mui.zoom.js"></script>
-    <script type="text/javascript" src="../js/lib/mui.previewimage.js"></script>-->
+    <script type="text/javascript" src="../js/lib/mui.previewimage.js"></script>
 
 </head>
 <body>
 <div class="outer" id="app_content">
     <div class="left" id="conversation">
+        <div class="net-error" v-if="!onLine">网络连接异常</div>
+
         <div class="item-conversation" v-bind:class="{ conversationSelected: conversationSelectIndex==index }"
              v-for="(item,index) in conversationList" @click="onConversationItemClick(index)">
             <img :src="HttpUtil.getWholeImageUrl(item.iconUrl)">
             <div class="unread-count" v-if="item.unreadCount>0">{{item.unreadCount}}</div>
             <div class="info">
-                <p class="nick-name">{{item.nickname}}
-                    <span v-if="item.otherOutUserId">({{item.otherOutUserId}})</span>
-                    <span v-if="!item.otherOutUserId && item.otherUserId">(旧版{{item.otherUserId}})</span>
-                </p>
+                <p class="nick-name">{{item.nickname}}{{item.subNickname}}</p>
                 <p class="last-msg">{{item.lastText}}</p>
             </div>
             <div class="time">{{FormatUtil.getMsgDateByTime(item.timestamp)}}</div>
         </div>
-
 
         <div class="bottom-desc">
             <div class="data-loading" v-if="conversationIsRefreshing">加载中...</div>
@@ -80,7 +78,7 @@
 
     <div class="right" id="itemMsg" v-show="conversationSelectIndex>=0">
         <div class="top-name">
-            <div class="username">{{otherNickname}}({{otherUserId}})</div>
+            <div class="username">{{otherNickname}}{{otherSubNickname}}</div>
         </div>
 
         <div class="msg-top-desc">

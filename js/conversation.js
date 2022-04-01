@@ -148,8 +148,8 @@ $(document).ready(function () {
             gotoMessage:function (item) {
                 localStorage.setItem("conversation",JSON.stringify(item));
                 localStorage.setItem("imUserId",this.imUserId);
-                localStorage.setItem("isFromConversation",true);
-                Bridge.openWebView("page/message.html");
+                //localStorage.setItem("isFromConversation",true);
+                Bridge.openWebView("page/message.html?isFromConversation=1");
             },
             startQueryTimer:function () {
                 if (ComConfig.CONVERSATION_LOOPER_TIME > 0) {

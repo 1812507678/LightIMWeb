@@ -1,5 +1,6 @@
 $(document).ready(function () {
-    //mui.previewImage();
+    mui.previewImage();
+
 
     var app_content = new Vue({
         el: '#app_content',
@@ -19,17 +20,21 @@ $(document).ready(function () {
             messageList: [],
             msgPageStart:0,
             fromUserId:'',
-            conversationId:'',
+            conversation:'',
             inputText:'',
             otherNickname:'', //对方的用户名
             otherUserId:"", //对方的用户id
+            otherSubNickname:"", //
             isQueryMsgByTimerRunning:false, //消息轮询器是否打开
             token:'', //访问令牌，初始化成功后返回
+            onLine: navigator.onLine, //网络状态
 
 
         },
         mounted:function(){
             this.keyDown();
+            window.addEventListener('online', this.updateOnlineStatus);
+            window.addEventListener('offline', this.updateOnlineStatus);
         },
         created: function () {
             this.initView();
@@ -37,7 +42,6 @@ $(document).ready(function () {
             this.appKey = getQueryURLString("appKey");
 
             this.initSdk();
-
 
         },
         methods: {
@@ -135,6 +139,7 @@ $(document).ready(function () {
                     var unreadCount;
                     var otherUserId;
                     var otherOutUserId;
+                    var subNickname;
                     if (parseInt(this.imUserId) === parseInt(extraObj.fromUserId)) {
                         nickname = isEmpty(extraObj.toNickname)?("用户"+list[i].toUserId):extraObj.toNickname;
                         iconUrl = extraObj.toIconUrl;
@@ -161,6 +166,14 @@ $(document).ready(function () {
                     list[i].nickname = nickname;
                     list[i].otherUserId = otherUserId;
                     list[i].otherOutUserId = otherOutUserId;
+
+                    if(otherOutUserId){
+                        subNickname = "（"+otherOutUserId+"）";
+                    }
+                    else {
+                        subNickname = "（旧版"+otherUserId+"）";
+                    }
+                    list[i].subNickname = subNickname;
                 }
                 return list;
             },
@@ -169,7 +182,8 @@ $(document).ready(function () {
             },
             onConversationItemClick:function (index) {
                 this.conversationSelectIndex = index;  //改变选中的会话index
-                this.reChangeConversation(this.conversationList[index]);
+                this.conversation = this.conversationList[index];
+                this.reChangeConversation();
             },
             startConversationQueryTimer:function () {
                 if (ComConfig.CONVERSATION_LOOPER_TIME > 0) {
@@ -179,7 +193,7 @@ $(document).ready(function () {
                     },ComConfig.CONVERSATION_LOOPER_TIME);
                 }
             },
-            reChangeConversation:function (conversation) {
+            reChangeConversation:function () {
                 //重置消息界面
                 this.messageList = [];
                 this.msgPageStart = 0;
@@ -187,14 +201,15 @@ $(document).ready(function () {
                 this.msgIsDataLoadAll = false;
                 this.msgIsRefreshing = false;
 
-                this.conversationId = conversation.id;
-                var extra = JSON.parse(conversation.extra);
+                var extra = JSON.parse(this.conversation.extra);
                 var fromNickname = extra.fromNickname;
                 var fromIconUrl = extra.fromIconUrl;
                 var toNickname = extra.toNickname;
                 var toIconUrl = extra.toIconUrl;
                 var fromUserId = parseInt(extra.fromUserId);
                 var toUserId = parseInt(extra.toUserId);
+
+                this.otherSubNickname = this.conversation.subNickname;
 
                 if (this.imUserId === fromUserId) {
                     this.curNickname = fromNickname;
@@ -227,10 +242,10 @@ $(document).ready(function () {
 
                 var param = {};
                 param.otherUserId = this.otherUserId;
-                param.conversationId = this.conversationId;
+                param.conversationId = this.conversation.id;
                 param.pageIndex = this.msgPageStart;
                 param.pageSize = 20;
-                param.conversationFromUserId = this.conversationList[this.conversationSelectIndex].fromUserId;
+                param.conversationFromUserId = this.conversation.fromUserId;
 
                 this.msgIsRefreshing = true;
                 HttpUtil.sendPost(
@@ -289,7 +304,7 @@ $(document).ready(function () {
 
                 var param = {};
                 param.otherUserId = this.otherUserId;
-                param.conversationId = this.conversationId;
+                param.conversationId = this.conversation.id;
                 param.pageIndex = 0;
                 param.pageSize = 20;
                 param.conversationFromUserId = this.conversationList[this.conversationSelectIndex].fromUserId;
@@ -361,7 +376,7 @@ $(document).ready(function () {
                 param.text = this.inputText;
                 param.extra = '';
                 param.userInfoExtra = JSON.stringify(this.getUserInfoExtra());
-                param.conversationFromUserId = this.conversationList[this.conversationSelectIndex].fromUserId;
+                param.conversationFromUserId = this.conversation.fromUserId;
 
                 if (type === 2) {
                     //文件
@@ -463,6 +478,10 @@ $(document).ready(function () {
                         })
                     }
                 }
+            },
+            updateOnlineStatus:function(e) {
+                const { type } = e;
+                this.onLine = type === 'online';
             },
 
         },

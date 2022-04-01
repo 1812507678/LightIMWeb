@@ -51,9 +51,21 @@
                     }
                 },
                 error:function(response){
+                    var errorDec;
                     if(response.code === -12) { //token失效
                         UserUtil.saveIMUserToken("");
                         UserUtil.saveAdminUser({});
+                    }
+                    else if (response.code) {
+                        errorDec = response.errorDec;
+                    }
+                    else {
+                        //其他异常
+                        if(navigator.onLine) {
+                            errorDec = '网络连接异常，请检查网络'; //联网状态
+                        } else {
+                            errorDec ='网络断开，请检查网络';  //断网状态
+                        }
                     }
 
                     if(!isNotShowErrorToast){
@@ -66,7 +78,7 @@
                     }
 
                     if(errorFun){
-                        errorFun(response.errorDec,response.code);
+                        errorFun(errorDec,response.code);
                     }
                 }
             });

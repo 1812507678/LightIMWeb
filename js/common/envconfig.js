@@ -3,13 +3,13 @@
 * 不同环境只需切换'环境指向'即可
 * */
 
-var currentEnv = 1;  //环境指向
+var currentEnv = 3;  //环境指向
 
 var env = [{
     config: {
         //生产
-        image_url: "http://resource.wzzmlk.com/app/im/upload/imgs/",
-        _path: "https://www.wzzmlk.com/RewardCatServer/req",
+        image_url: "",
+        _path: "",
         _isBrowserTest: false,
     }
 }, {
@@ -22,8 +22,8 @@ var env = [{
 }, {
     config: {
         //sit
-        image_url: "http://8.136.138.152:8000/static/",
-        _path: "http://192.168.43.108:8080/req",
+        image_url: "",
+        _path: "",
         _isBrowserTest: false,
     }
 },{

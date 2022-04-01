@@ -25,7 +25,7 @@ $(document).ready(function () {
 
         },
         created: function () {
-            this.isFromConversation = localStorage.getItem("isFromConversation");
+            this.isFromConversation = getQueryURLString("isFromConversation");
 
             this.initUser();
 
@@ -250,11 +250,6 @@ $(document).ready(function () {
                 this.sendMsg(2, fileUrl, fileSmallUrl);
             },
             sendMsg: function (type, fileUrl, fileSmallUrl) {
-                if (this.conversationSelectIndex < 0) {
-                    Bridge.toast("未选中会话，请先在左侧点击会话列表");
-                    return
-                }
-
                 var param = {};
                 param.fromUserId = this.imUserId;
                 param.toUserId = this.otherImUserId;
