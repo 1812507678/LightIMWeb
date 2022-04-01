@@ -16,7 +16,7 @@
 
             $.ajax({
                 type:'POST',  //GET/POST
-                url:Envconfig.BHSH_SERVER_PATH,
+                url:Envconfig.SERVER_PATH,
                 data:param,   //post请求数据
                 dataType:"json",  //返回值是json格式
                 contentType: false,
@@ -142,7 +142,7 @@
                 return url;
             }
             else {
-                return Envconfig.BHSH_IMAGE_URL +url;
+                return Envconfig.IMAGE_URL +url;
             }
         };
 

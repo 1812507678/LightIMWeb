@@ -39,8 +39,8 @@ var env = [{
 //对外可访问属性
 !(function(w) {
     w.Envconfig = new function() {
-        this.BHSH_SERVER_PATH = env[currentEnv].config._path;  //服务器接口地址
-        this.BHSH_IMAGE_URL = env[currentEnv].config.image_url;  //图片地址
+        this.SERVER_PATH = env[currentEnv].config._path;  //服务器接口地址
+        this.IMAGE_URL = env[currentEnv].config.image_url;  //图片地址
         this.CURRENT_ENV_INDEX = currentEnv;  //当前环境指向
         this.IS_BROWSER_TEST = env[currentEnv].config._isBrowserTest;  //是否浏览器调试
 
